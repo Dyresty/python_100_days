@@ -52,6 +52,8 @@ def scale_used(value):
 scale = tk.Scale(from_=0, to=100, command=scale_used)
 scale.pack()
 
+
+
 # Checkbutton
 def checkbutton_used():
     print(checked_state.get())
@@ -60,6 +62,8 @@ checkbutton = tk.Checkbutton(text="Is On?", variable=checked_state, command=chec
 checkbutton.pack()
 
 
+
+# Radiobutton
 def radio_used():
     print(radio_state.get())  
 radio_state = tk.IntVar()
@@ -68,6 +72,7 @@ radiobutton2 = tk.Radiobutton(text="Option 2", value=2, variable=radio_state, co
 tk.command=radio_used
 radiobutton1.pack()
 radiobutton2.pack()
+
 
 
 # Listbox
