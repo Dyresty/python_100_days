@@ -73,8 +73,6 @@ else:
 finally:
     print("Execution completed.")
 
-
-
 # Raising your own exceptions
 height = float(input("Height: "))
 weight = float(input("Weight: "))
