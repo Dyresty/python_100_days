@@ -1,7 +1,7 @@
 
 # ---------------------------- CONSTANTS ------------------------------- #
-import os
 from pathlib import Path
+from tkinter import *
 
 # Get the directory where this script is located
 SCRIPT_DIR = Path(__file__).parent
@@ -72,8 +72,6 @@ def count_down(count, phase_type):
         window.after(1000, lambda: button_start_clicked(1))
 
 # ---------------------------- UI SETUP ------------------------------- #
-
-from tkinter import *
 
 window = Tk()
 window.title("Pomodoro")

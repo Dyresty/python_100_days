@@ -10,6 +10,8 @@ from tkinter import messagebox
 
 import pyperclip
 
+import json
+
 # Get the directory where this script is located
 SCRIPT_DIR = Path(__file__).parent
 
@@ -44,8 +46,14 @@ def save_password():
     is_ok = messagebox.askokcancel(title=website_text.get("1.0", END).strip(),
                                    message=f"These are the details entered: \nEmail: {email_text.get('1.0', END).strip()} \nPassword: {password_text.get('1.0', END).strip()} \nIs it ok to save?")
     if is_ok:
-        with open(SCRIPT_DIR / "passwords.txt", "a") as file:
-            file.write(f"{website_text.get('1.0', END).strip()} | {email_text.get('1.0', END).strip()} | {password_text.get('1.0', END).strip()}\n")
+        with open(SCRIPT_DIR / "password_saver_data.json", "w") as file:
+            new_data = {
+                    website_text.get("1.0", END).strip(): {
+                        "email": email_text.get("1.0", END).strip(),
+                        "password": password_text.get("1.0", END).strip()
+                }   
+            }
+            json.dump(new_data, file, indent=4)
         website_text.delete("1.0", END)
         email_text.delete("1.0", END)
         password_text.delete("1.0", END)
