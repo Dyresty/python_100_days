@@ -1,12 +1,10 @@
-from pathlib import Path
-
 import random
 import string
 
 from tkinter import *
 from tkinter import messagebox
 
-
+from pathlib import Path
 SCRIPT_DIR = Path(__file__).parent
 
 import pandas as pd

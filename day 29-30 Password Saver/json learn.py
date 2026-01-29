@@ -7,6 +7,10 @@
 # json.read() - read json file
 # json.write() - write to json file
 
+
+from pathlib import Path
+SCRIPT_DIR = Path(__file__).parent
+
 import json
 new_data = {
     "website":{
@@ -14,7 +18,7 @@ new_data = {
         "password":"bleh bleh"
     }
 }
-with open("data.json", "w") as file:
+with open((str(SCRIPT_DIR / "data.json")), "w") as file:
     json.dump(new_data, file, indent = 4)
 
 
@@ -30,12 +34,12 @@ new_data = {
     }
 }
 
-with open("data.json","r") as file:
+with open((str(SCRIPT_DIR / "data.json")), "r") as file:
     #read old data
     data = json.load(file)
     #updating old data with new data
     data.update(new_data)  
-with open("data.json", "w") as file:
+with open((str(SCRIPT_DIR / "data.json")), "w")  as file:
     #Write the updated data 
     json.dump(data, file, indent = 4)
     print(data)
