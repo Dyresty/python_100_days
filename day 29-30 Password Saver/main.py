@@ -45,19 +45,40 @@ def save_password():
 
     is_ok = messagebox.askokcancel(title=website_text.get("1.0", END).strip(),
                                    message=f"These are the details entered: \nEmail: {email_text.get('1.0', END).strip()} \nPassword: {password_text.get('1.0', END).strip()} \nIs it ok to save?")
-    if is_ok:
-        with open(SCRIPT_DIR / "password_saver_data.json", "w") as file:
-            new_data = {
+    new_data = {
                     website_text.get("1.0", END).strip(): {
                         "email": email_text.get("1.0", END).strip(),
                         "password": password_text.get("1.0", END).strip()
                 }   
             }
-            json.dump(new_data, file, indent=4)
-        website_text.delete("1.0", END)
-        email_text.delete("1.0", END)
-        password_text.delete("1.0", END)
-        messagebox.showinfo(title="Success", message="Password saved successfully!")
+    if is_ok:
+        try:
+            with open(SCRIPT_DIR / "password_saver_data.json","r") as file:
+                data = json.load(file)
+                data.update(new_data)
+        except FileNotFoundError:
+            with open(SCRIPT_DIR / "password_saver_data.json", "w") as file:
+                json.dump(new_data, file, indent=4)
+        else:
+            with open(SCRIPT_DIR / "password_saver_data.json", "w") as file:
+                json.dump(new_data, file, indent=4)
+        finally:
+            website_text.delete("1.0", END)
+            email_text.delete("1.0", END)
+            password_text.delete("1.0", END)
+            messagebox.showinfo(title="Success", message="Password saved successfully!")
+
+def search_function():
+    try:
+        with open(SCRIPT_DIR / "password_saver_data.json","r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No data file found")
+    else:
+        if website_text.get("1.0", END).strip() in data:
+            messagebox.showinfo(title=f"{website_text.get("1.0", END).strip()}", message=f"Login details are as follows:\nEmail: {data[website_text.get("1.0", END).strip()]["email"]}\nPassword: {data[website_text.get("1.0", END).strip()]["password"]}\n")
+        else:
+            messagebox.showinfo(title="Oops", message=f"The details for {website_text.get("1.0", END).strip()} are not available")
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -75,12 +96,14 @@ website_label.grid(column=0, row=2)
 website_label.config(pady=5)
 
 
-website_text = Text(height=1, width=37)
+website_text = Text(height=1, width=23)
 website_text.focus()
 website_text.insert(END, "")
 print(website_text.get("1.0", END))
 website_text.grid(column=1, row=2,  columnspan=3)
 
+generate_password_button = Button(text="Search", command=search_function)
+generate_password_button.grid(column=2, row=2)
 
 email_label = Label(text="Email")
 email_label.grid(column=0, row=3)
