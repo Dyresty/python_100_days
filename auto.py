@@ -298,7 +298,7 @@ def swipe_words_custom(d, words, chars, coords):
                 is_neighbor = (diff == 1) or (diff == len(chars) - 1)
                 
                 if is_neighbor:
-                    path.append(pt_list[next_i])
+                    path.append(pt_list[next_i]) 
                 else:
                     mx = (pt_list[curr][0] + pt_list[next_i][0]) / 2
                     my = (pt_list[curr][1] + pt_list[next_i][1]) / 2
